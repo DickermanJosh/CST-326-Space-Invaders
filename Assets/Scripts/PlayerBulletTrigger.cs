@@ -1,0 +1,61 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+using UnityEngine.SocialPlatforms.Impl;
+
+public class PlayerBulletTrigger : MonoBehaviour
+{
+    private int score;
+    private String scoreString;
+    //private int enemiesDestroyed;
+    private ScoreManager scoreM;
+    
+    private void Start()
+    {
+        scoreM = GameObject.Find("Game Manager").GetComponent<ScoreManager>();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        
+        if (other.gameObject.CompareTag("10")) // Skull Enemy
+        {
+            Destroy(other.gameObject);
+            scoreM.ScoreUpdate(10);
+            //enemiesDestroyed += 1;
+            Destroy(gameObject); // Destroy the current game object
+        }
+        else if (other.gameObject.CompareTag("20")) // Bug Enemy
+        {
+            Destroy(other.gameObject);
+            scoreM.ScoreUpdate(20);
+            //enemiesDestroyed += 1;
+            Destroy(gameObject); // Destroy the current game object
+        }
+        else if (other.gameObject.CompareTag("30")) // Squid Enemy
+        {
+            Destroy(other.gameObject);
+            scoreM.ScoreUpdate(30);
+            //enemiesDestroyed += 1;
+            Destroy(gameObject); // Destroy the current game object
+        }
+        else if (other.gameObject.CompareTag("UFO")) // UFO
+        {
+            Destroy(other.gameObject);
+            scoreM.ScoreUpdate(250); // TODO: Make Random between 50 - 500 in blocks of 50s (low priority)
+            //enemiesDestroyed += 1;
+            Destroy(gameObject); // Destroy the current game object
+        }
+        else if (other.gameObject.CompareTag("EnemyBullet")) // Enemy Bullet
+        {
+            Destroy(other.gameObject);
+            Destroy(gameObject); // Destroy the current game object
+        }
+        else if (other.gameObject.CompareTag("Barrier"))
+        {
+            Destroy(this.gameObject);
+        }
+    }
+}
