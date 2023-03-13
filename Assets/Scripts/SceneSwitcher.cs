@@ -4,14 +4,19 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class SceneSwitcher : MonoBehaviour
 {
-    // Switch scenes when the button is pressed
-    public void playGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
-
+    // Methods to switch scenes
     public void Menu()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        
+        SceneManager.LoadScene(0);
+    }
+    public void playGame()
+    {
+        SceneManager.LoadScene(1);
+    }
+    public void Credits()
+    {
+        SceneManager.LoadScene(2);
     }
 }
+

@@ -6,11 +6,12 @@ using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
-     public GameObject bulletPrefab;
-     public Transform shootOffsetTransform;
-    private Rigidbody rb;
-   
+    private Animator anim;
+    public GameObject bulletPrefab;
+    public Transform shootOffsetTransform;
     public float moveSpeed = 1;
+    public AudioSource fire;
+    private Rigidbody rb;
     private float getAxis;
     private Vector3 move;
     
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     { 
         rb = this.gameObject.GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -26,7 +28,8 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             GameObject shot = Instantiate(bulletPrefab, shootOffsetTransform.position, Quaternion.identity);
-
+            anim.SetTrigger("isShooting");
+            fire.Play();
             Destroy(shot, 8f);
         }
     }
@@ -35,5 +38,13 @@ public class PlayerController : MonoBehaviour
         getAxis = Input.GetAxis("Horizontal");
         move = moveSpeed * new Vector3(getAxis, 0f, 0f);
         rb.AddForce(move * (moveSpeed * Time.deltaTime),ForceMode.Force);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("EnemyBullet"))
+        {
+            anim.SetBool("isDead",true);
+        }
     }
 }

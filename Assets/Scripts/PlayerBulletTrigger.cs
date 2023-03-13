@@ -7,13 +7,14 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class PlayerBulletTrigger : MonoBehaviour
 {
+    private ExplosionSounds deathSounds;
     private int score;
     private String scoreString;
-    //private int enemiesDestroyed;
     private ScoreManager scoreM;
     
     private void Start()
     {
+        deathSounds = GameObject.Find("Game Manager").GetComponent<ExplosionSounds>();
         scoreM = GameObject.Find("Game Manager").GetComponent<ScoreManager>();
     }
 
@@ -22,30 +23,30 @@ public class PlayerBulletTrigger : MonoBehaviour
         
         if (other.gameObject.CompareTag("10")) // Skull Enemy
         {
-            Destroy(other.gameObject);
+            deathSounds.explodeEnemy();
+            Destroy(other.gameObject,0.1f);
             scoreM.ScoreUpdate(10);
-            //enemiesDestroyed += 1;
             Destroy(gameObject); // Destroy the current game object
         }
         else if (other.gameObject.CompareTag("20")) // Bug Enemy
         {
-            Destroy(other.gameObject);
+            deathSounds.explodeEnemy();
+            Destroy(other.gameObject,0.1f);
             scoreM.ScoreUpdate(20);
-            //enemiesDestroyed += 1;
             Destroy(gameObject); // Destroy the current game object
         }
         else if (other.gameObject.CompareTag("30")) // Squid Enemy
         {
-            Destroy(other.gameObject);
+            deathSounds.explodeEnemy();
+            Destroy(other.gameObject,0.1f);
             scoreM.ScoreUpdate(30);
-            //enemiesDestroyed += 1;
             Destroy(gameObject); // Destroy the current game object
         }
         else if (other.gameObject.CompareTag("UFO")) // UFO
         {
-            Destroy(other.gameObject);
+            deathSounds.explodeEnemy();
+            Destroy(other.gameObject,0.1f);
             scoreM.ScoreUpdate(250); // TODO: Make Random between 50 - 500 in blocks of 50s (low priority)
-            //enemiesDestroyed += 1;
             Destroy(gameObject); // Destroy the current game object
         }
         else if (other.gameObject.CompareTag("EnemyBullet")) // Enemy Bullet

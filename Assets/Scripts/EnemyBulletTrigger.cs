@@ -2,16 +2,26 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyBulletTrigger : MonoBehaviour
 {
+    private ExplosionSounds deathSounds;
+    private PlayerSpawner playerSpawner;
+    private void Start()
+    {
+        deathSounds = GameObject.Find("Game Manager").GetComponent<ExplosionSounds>();
+        playerSpawner = GameObject.Find("Game Manager").GetComponent<PlayerSpawner>();
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Destroy(other.gameObject);
+            deathSounds.explodePlayer();
+            Destroy(other.gameObject,0.1f);
             Destroy(this.gameObject);
-            Debug.Log("You Lose!");
+            playerSpawner.playerLives -= 1;
+            playerSpawner.Respawn();
         }
         else if (other.gameObject.CompareTag("Floor"))
         {
@@ -22,4 +32,5 @@ public class EnemyBulletTrigger : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
 }

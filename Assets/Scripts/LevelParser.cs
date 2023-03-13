@@ -9,18 +9,20 @@ public class LevelParser : MonoBehaviour
     public GameObject SquidEnemy3Prefab;
     public GameObject BugEnemy2Prefab;
     public GameObject SkullEnemy1Prefab;
-    public Transform EnemyParent;
     // --------------------------------------------------------------------------
+    
     void Start()
     {
         LoadLevel();
     }
+    
 
     // --------------------------------------------------------------------------
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (this.transform.childCount == 0)
         {
+            this.transform.position = new Vector3(0f, 2.7f, 0f);
             ReloadLevel();
         }
     }
@@ -57,15 +59,15 @@ public class LevelParser : MonoBehaviour
                 var letter = letters[column];
                 if (letter == '3')
                 {
-                    Instantiate(SquidEnemy3Prefab, new Vector3(column-5f, row, -1f), Quaternion.identity).transform.SetParent(EnemyParent);
+                    Instantiate(SquidEnemy3Prefab, new Vector3(column-5f, row, -1f), Quaternion.identity).transform.SetParent(this.transform);
                 }
                 else if (letter == '2')
                 {
-                    Instantiate(BugEnemy2Prefab, new Vector3(column-5, row, -1f), Quaternion.identity).transform.SetParent(EnemyParent);
+                    Instantiate(BugEnemy2Prefab, new Vector3(column-5, row, -1f), Quaternion.identity).transform.SetParent(this.transform);
                 }
                 else if (letter == '1')
                 {
-                   Instantiate(SkullEnemy1Prefab, new Vector3(column-5, row, -1f), Quaternion.identity).transform.SetParent(EnemyParent);
+                   Instantiate(SkullEnemy1Prefab, new Vector3(column-5, row, -1f), Quaternion.identity).transform.SetParent(this.transform);
                 }
                 // Todo - Instantiate a new GameObject that matches the type specified by letter
                 // Todo - Position the new GameObject at the appropriate location by using row and column
@@ -80,7 +82,7 @@ public class LevelParser : MonoBehaviour
     // --------------------------------------------------------------------------
     private void ReloadLevel()
     {
-        foreach (Transform child in EnemyParent)
+        foreach (Transform child in this.transform)
         {
            Destroy(child.gameObject);
         }
